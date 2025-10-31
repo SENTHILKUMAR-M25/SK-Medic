@@ -33,12 +33,7 @@ export default function SpecialistsGrid() {
   };
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    contact: "",
-    problem: "",
-    date: "",
-  });
+  const [formData, setFormData] = useState({ name: "", contact: "", problem: "", date: "" });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,43 +48,48 @@ export default function SpecialistsGrid() {
   };
 
   return (
-    <section className="relative py-20 bg-gradient-to-b from-white via-blue-50/30 to-blue-100/20 overflow-hidden">
-      {/* === Floating Background === */}
+    <section className="relative py-16 md:py-20 bg-gradient-to-b from-white via-blue-50/30 to-blue-100/20 overflow-hidden">
+      {/* Background blobs */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute w-72 h-72 bg-blue-200/30 blur-3xl rounded-full top-10 left-10 animate-pulse"></div>
-        <div className="absolute w-80 h-80 bg-blue-300/20 blur-3xl rounded-full bottom-0 right-10 animate-pulse"></div>
+        <div className="absolute w-64 h-64 bg-blue-200/30 blur-3xl rounded-full top-10 left-10 animate-pulse"></div>
+        <div className="absolute w-72 h-72 bg-blue-300/20 blur-3xl rounded-full bottom-0 right-10 animate-pulse"></div>
       </div>
 
       <motion.div
         initial="hidden"
         whileInView="show"
         viewport={{ once: true }}
-        className="max-w-7xl mx-auto text-center px-4 sm:px-6 md:px-12"
+        className="max-w-7xl mx-auto text-center px-4 sm:px-6 md:px-10"
       >
+        {/* Heading */}
         <motion.h3
           variants={fadeUp}
-          className="text-3xl md:text-4xl font-bold text-slate-900"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900"
         >
           Meet Our Specialists
         </motion.h3>
         <motion.p
           variants={fadeUp}
-          className="text-slate-500 mt-3 max-w-xl mx-auto"
+          className="text-slate-500 mt-3 text-sm sm:text-base max-w-2xl mx-auto"
         >
           Book an appointment with experienced medical professionals instantly.
         </motion.p>
 
-        {/* === Doctors Grid === */}
+        {/* Grid */}
         <motion.div
           variants={fadeUp}
-          className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8"
+          className="
+            mt-10 sm:mt-12 
+            grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 
+            gap-5 sm:gap-6 md:gap-8
+          "
         >
           {specialists.map((s, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.05, y: -5 }}
+              whileHover={{ scale: 1.05, y: -4 }}
               transition={{ type: "spring", stiffness: 250 }}
-              className="bg-white rounded-2xl p-4 shadow-md hover:shadow-2xl border border-blue-100 transition-all"
+              className="bg-white rounded-2xl p-4 sm:p-5 shadow-md hover:shadow-2xl border border-blue-100 transition-all"
             >
               <div className="aspect-square rounded-xl overflow-hidden bg-slate-50">
                 <motion.img
@@ -100,17 +100,17 @@ export default function SpecialistsGrid() {
                   transition={{ duration: 0.4 }}
                 />
               </div>
-              <div className="mt-4">
-                <div className="text-slate-800 font-semibold text-base md:text-lg">
+              <div className="mt-3 sm:mt-4">
+                <div className="text-slate-800 font-semibold text-base sm:text-lg truncate">
                   {s.name}
                 </div>
-                <div className="text-sm text-blue-600 font-medium mt-1">
+                <div className="text-xs sm:text-sm text-blue-600 font-medium mt-1">
                   {s.role}
                 </div>
               </div>
               <button
                 onClick={() => setSelectedDoctor(s)}
-                className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition"
+                className="w-full mt-3 sm:mt-4 py-2 sm:py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-sm font-medium transition"
               >
                 Book Appointment
               </button>
@@ -118,7 +118,7 @@ export default function SpecialistsGrid() {
           ))}
         </motion.div>
 
-        {/* === Popup Form === */}
+        {/* Popup Form */}
         <AnimatePresence>
           {selectedDoctor && (
             <motion.div
@@ -132,28 +132,26 @@ export default function SpecialistsGrid() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 120 }}
-                className="bg-white rounded-2xl shadow-2xl w-full max-w-lg p-8 relative"
+                className="bg-white rounded-2xl shadow-2xl w-full max-w-md sm:max-w-lg p-6 sm:p-8 relative"
               >
                 <button
                   onClick={() => setSelectedDoctor(null)}
-                  className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-xl font-bold"
+                  className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 text-2xl font-bold"
                 >
                   ×
                 </button>
 
-                <h4 className="text-2xl font-semibold text-slate-900 mb-6 text-center">
+                <h4 className="text-xl sm:text-2xl font-semibold text-slate-900 mb-5 text-center">
                   Book Appointment
                 </h4>
 
-                {/* === Doctor Info === */}
-                <div className="bg-blue-50 p-4 rounded-lg mb-6 text-left border border-blue-100">
+                <div className="bg-blue-50 p-3 sm:p-4 rounded-lg mb-5 border border-blue-100 text-left">
                   <h5 className="font-semibold text-slate-800">
                     Doctor: {selectedDoctor.name}
                   </h5>
                   <p className="text-blue-600 text-sm">{selectedDoctor.role}</p>
                 </div>
 
-                {/* === Form === */}
                 <form onSubmit={handleSubmit} className="space-y-4 text-left">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">
@@ -167,7 +165,7 @@ export default function SpecialistsGrid() {
                         setFormData({ ...formData, name: e.target.value })
                       }
                       placeholder="Enter your name"
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm sm:text-base"
                     />
                   </div>
 
@@ -183,7 +181,7 @@ export default function SpecialistsGrid() {
                         setFormData({ ...formData, contact: e.target.value })
                       }
                       placeholder="Enter your contact number"
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm sm:text-base"
                     />
                   </div>
 
@@ -197,7 +195,7 @@ export default function SpecialistsGrid() {
                       onChange={(e) =>
                         setFormData({ ...formData, problem: e.target.value })
                       }
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm sm:text-base"
                     >
                       <option value="">Select a problem</option>
                       {problemsByRole[selectedDoctor.role]?.map((p, i) => (
@@ -219,14 +217,14 @@ export default function SpecialistsGrid() {
                       onChange={(e) =>
                         setFormData({ ...formData, date: e.target.value })
                       }
-                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                      className="w-full border border-slate-300 rounded-md px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm sm:text-base"
                     />
                   </div>
 
                   <motion.button
                     type="submit"
                     whileHover={{ scale: 1.05 }}
-                    className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition"
+                    className="w-full mt-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md font-medium transition text-sm sm:text-base"
                   >
                     Confirm Appointment
                   </motion.button>
