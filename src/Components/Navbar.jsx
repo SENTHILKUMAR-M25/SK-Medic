@@ -76,7 +76,7 @@ export default function Navbar() {
         {/* === Mobile Toggle Button === */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden absolute right-6 top-4 p-2 rounded-md hover:bg-blue-50 transition"
+          className="md:hidden absolute right-6  p-2 rounded-md hover:bg-blue-50 transition"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
